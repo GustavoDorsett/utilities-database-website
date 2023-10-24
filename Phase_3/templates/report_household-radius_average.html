@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+</head>
+<body>
+<h1>Household Averages by Radius</h1>
+<br>
+<form method="POST">
+    <label for="zip_code">Zipcode to Search On </label>
+    <input type="text" id="zip_code" name="zip_code">
+    <br>
+    <br>
+    <label for="radius">Radius (in miles):</label>
+    <select id="radius" name="radius" type="number">
+        <option value=0>0</option>
+        <option value=5>5</option>
+        <option value=10>10</option>
+        <option value=25>25</option>
+        <option value=50>50</option>
+        <option value=100>100</option>
+        <option value=250>250</option>     
+    </select><br><br>
+    
+    <input type="submit" formaction="/report_household-radius_average">
+    <br><br>
+    <table class="table table-striped" id="empTable">
+        <tr>
+            <th>Postal Code</th>
+            <th>Radius</th>
+            <th># Households</th>
+            <th># Houses</th>
+            <th># Apartments</th>
+            <th># Townhomes</th>
+            <th># Condos</th>
+            <th># Mobile Homes</th>
+            <th>Avg Square Footage</th>
+            <th>Avg Heating Temp</th>
+            <th>Avg Cooling Temp</th>
+            <th>Utilities Used</th>
+            <th># OTG Homes</th>
+            <th># Homes w/ Power Gen</th>
+            <th>Most Common Power Gen Method</th>
+            <th>Avg Monthly Power Gen</th>
+            <th># Homes w/ Battery Storage</th>
+        </tr>
+            <tr>
+                <td id="zip">{{ results[0] }}</td>
+                <td id="rad">{{ results[1] }}</td>
+                <td id="numh">{{ results[0] }}</td>
+                <td id="numho">{{ results[1] }}</td>
+                <td id="numap">{{ results[0] }}</td>
+                <td id="numth">{{ results[1] }}</td>
+                <td id="numc">{{ results[0] }}</td>
+                <td id="nummh">{{ results[1] }}</td>
+                <td id="avgsqft">{{ results[0] }}</td>
+                <td id="avgh">{{ results[1] }}</td>
+                <td id="avgc">{{ results[0] }}</td>
+                <td id="uu">{{ results[1] }}</td>
+                <td id="numotg">{{ results[0] }}</td>
+                <td id="numpg">{{ results[1] }}</td>
+                <td id="comgen">{{ results[0] }}</td>
+                <td id="avgpg">{{ results[1] }}</td>
+                <td id="numbs">{{ results[0] }}</td>
+            </tr>
+    </table>
+    
+<br>
+<p><a href="/report_menu">Return to Report Menu</a></p>
+</body>
+</html>

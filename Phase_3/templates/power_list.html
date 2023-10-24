@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<br>
+<div class="progress" style="height: 25px;">
+  <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+  <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+  <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Generators</div>
+</div>
+<br>
+</head>
+    <h1>Power Generation</h1>
+    <p>You have added the following generators to your household:</p>
+    <p>{{ email }}</p>
+    <table class="table table-striped">
+        <tr>
+              <th>Num</th>
+              <th>Type</th>
+              <th>Monthly kWh</th>
+              <th>Battery kWh</th>
+              <th></th>
+        </tr>
+            {% for row in rows %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[3] }}</td>
+                    <td>  
+                    <a href={{ url_for('delete_gen', email=email, pon=row[0]) }}>Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+    </table>
+
+    <p><a href={{ url_for('add_power', email=email) }}>+ another generator</a></p>
+
+        
+    <a href="/end_submission/{{email}}">
+       <button id="next" class="button" type="button">Complete Submission</button>
+    </a>
+    
+    <script>
+      if({{ disable }} == 1)
+      {
+          document.getElementById('next').disabled = true;
+          document.getElementById('next').readonly = true;
+          document.getElementById('next').style['background-color'] = 'grey';
+      }
+      else{
+          document.getElementById('next').disabled = false;
+          document.getElementById('next').readonly = false;
+          document.getElementById('next').style['background-color'] = '';
+      }
+  </script>
+
+</body>
+</html>

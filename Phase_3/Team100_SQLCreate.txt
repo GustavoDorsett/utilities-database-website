@@ -1,0 +1,91 @@
+/*DATABASE*/
+DROP DATABASE IF EXISTS `cs6400_spring23_team100`;
+CREATE DATABASE IF NOT EXISTS `cs6400_spring23_team100`;
+USE `cs6400_spring23_team100`;
+/*TABLES*/
+CREATE TABLE Household (
+email varchar(50) NOT NULL,
+square_footage int NOT NULL,
+household_type varchar(100) NOT NULL,
+thermostat_setting_heat int DEFAULT NULL,
+thermostat_setting_cold int DEFAULT NULL,
+zip varchar(5) NOT NULL,
+PRIMARY KEY (email)
+);
+CREATE TABLE PublicUtilities (
+email varchar(50) NOT NULL,
+public_utility varchar(250) NOT NULL,
+PRIMARY KEY (email, public_utility),
+FOREIGN KEY (email) REFERENCES Household(email)
+);
+CREATE TABLE PostalCode (
+zip varchar(5) NOT NULL,
+city varchar(50) NOT NULL,
+post_state varchar(2) NOT NULL,
+latitude float NOT NULL,
+longitude float NOT NULL,
+PRIMARY KEY (zip)
+);
+CREATE TABLE Generator (
+email varchar(50) NOT NULL,
+order_entered int NOT NULL,
+gen_type varchar(250) NOT NULL,
+average_monthly_kwh int NOT NULL,
+battery_storage_capacity int DEFAULT NULL,
+PRIMARY KEY (email, order_entered),
+UNIQUE KEY (order_entered),
+FOREIGN KEY (email) REFERENCES Household(email)
+);
+CREATE TABLE Manufacturer (
+manufacturer_name varchar(250) NOT NULL,
+PRIMARY KEY (manufacturer_name)
+);
+CREATE TABLE ApplianceOwner (
+email varchar(50) NOT NULL,
+order_entered int NOT NULL,
+app_id int AUTO_INCREMENT,
+app_type varchar (50) NOT NULL,
+PRIMARY KEY (email, order_entered),
+UNIQUE KEY (app_id),
+FOREIGN KEY (email) REFERENCES Household(email)
+);
+CREATE TABLE WaterHeater (
+app_id int NOT NULL,
+btu_rating int NOT NULL,
+model_name varchar(250) DEFAULT NULL,
+manufacturer_name varchar(250) NOT NULL,
+energy_source varchar(16) NOT NULL,
+current_temp_setting INT DEFAULT NULL,
+capacity float NOT NULL,
+PRIMARY KEY (app_id),
+FOREIGN KEY (app_id) REFERENCES ApplianceOwner(app_id),
+FOREIGN KEY (manufacturer_name) REFERENCES Manufacturer(manufacturer_name)
+);
+CREATE TABLE AirHandler (
+app_id int NOT NULL,
+btu_rating int NOT NULL,
+model_name varchar(250) DEFAULT NULL,
+manufacturer_name varchar(250) NOT NULL,
+PRIMARY KEY (app_id),
+FOREIGN KEY (app_id) REFERENCES ApplianceOwner(app_id),
+FOREIGN KEY (manufacturer_name) REFERENCES Manufacturer(manufacturer_name)
+);
+CREATE TABLE Heater (
+app_id int NOT NULL,
+energy_source varchar(16) NOT NULL,
+PRIMARY KEY (app_id),
+FOREIGN KEY (app_id) REFERENCES AirHandler(app_id)
+);
+CREATE TABLE HeatPump (
+app_id int NOT NULL,
+seer float NOT NULL,
+hspf float NOT NULL,
+PRIMARY KEY (app_id),
+FOREIGN KEY (app_id) REFERENCES AirHandler(app_id)
+);
+CREATE TABLE AirConditioner (
+app_id int NOT NULL,
+eer float NOT NULL,
+PRIMARY KEY (app_id),
+FOREIGN KEY (app_id) REFERENCES AirHandler(app_id)
+);

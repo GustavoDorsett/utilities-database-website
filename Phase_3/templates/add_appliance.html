@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<br>
+<div class="progress" style="height: 25px;">
+  <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+  <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Appliances</div>
+</div>
+<br>
+    <script type="text/javascript">
+        function showHideFields() {
+			var select = document.getElementById("appliance_type");
+			var hiddenFields = document.getElementById("hiddenFields");
+            var otherFields = document.getElementById("otherFields");
+			if (select.value == "airhandler") {
+				hiddenFields.style.display = "block";
+                otherFields.style.display = "none";
+			} else {
+				otherFields.style.display = "block";
+                hiddenFields.style.display = "none";
+			}
+		}
+        function showACHide(){
+            var checkbox = document.getElementById("airconditioner");
+			var achide = document.getElementById("achidden");
+            
+			if (checkbox.checked == true) {
+				achide.style.display = "block";                
+			} else {				
+                achide.style.display = "none";
+			}
+		}
+        function showheaterHide(){
+            var checkbox = document.getElementById("heater");
+			var heathidden = document.getElementById("heathidden");
+            
+			if (checkbox.checked == true) {
+				heathidden.style.display = "block";                
+			} else {				
+                heathidden.style.display = "none";
+			}
+		}
+        function showheatpumpHide(){
+            var checkbox = document.getElementById("heatpump");
+			var heatpumphidden = document.getElementById("heatpumphidden");
+            
+			if (checkbox.checked == true) {
+				heatpumphidden.style.display = "block";                
+			} else {				
+                heatpumphidden.style.display = "none";
+			}
+		}
+        
+    </script>
+</head>
+<body>
+    <h1> Add Appliance</h1>
+    <p>Please provide the details for the appliance.</p>
+    <form  method="POST">
+        <input type="hidden" id="email" name="email" value="{{ email }}">
+
+        <label for="appliance_type">Appliance type:</label>
+        <select id="appliance_type" name="appliance_type" required onchange="showHideFields(); require_fields();">
+            <option value="airhandler">Air Handler</option>
+            <option value="waterheater">Water heater</option>
+        </select><br><br>
+
+
+        <label for="manufacturer">Manufacturer:</label>
+        <select id="manufacturer" name="manufacturer" required >
+            {% for m in manufacturers %}
+            <option value="{{ m }}">{{ m }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="modelname">Model Name:</label>
+        <input id="modelname" name="modelname" /><br><br>
+
+        <label for="btu_rating">BTU Rating:</label>
+        <input type="number"  id="btu_rating" name="btu_rating" min="0" step="1" required><br><br>
+
+        <hr>
+        <p>Please select the heating and/or cooling methods of your appliance:</p>
+
+        <div id="hiddenFields" style="display: block;">
+            <input type="checkbox" id="airconditioner" name="airconditioner" value="airconditioner" onclick="showACHide(); validate('airconditioner', 'eer'); require_fields();">
+            <label for="airconditioner"> Air Conditioner</label><br>
+
+            <input type="checkbox" id="heater" name="heater" value="heater" onclick="showheaterHide(); validate('heater', 'heater_energy_source'); require_fields();">
+            <label for="heater"> Heater</label><br>
+
+            <input type="checkbox" id="heatpump" name="heatpump" value="heatpump" onclick="showheatpumpHide(); validate('heatpump', 'seer', 'hspf'); require_fields(); ">
+            <label for="heatpump"> Heat Pump</label><br><br>
+            <div >
+                <div id="achidden" style="display: none;">
+
+                    <label class="eer" for="eer">Energy Efficiency Ratio:</label>
+                    <input id="eer" name="eer" type="number" step=".1" ><br><br>
+
+                </div>
+                <div id="heathidden" style="display: none;">
+                    <label for="heater_energy_source">Energy Source:</label>
+                    <select id="heater_energy_source" name="heater_energy_source">
+                        <option value="Electric"> Electric </option>
+                        <option value="Gas"> Gas </option>
+                        <option value="Fuel Oil"> Fuel Oil </option>
+                        </select> <br><br> 
+                </div>
+                <div id="heatpumphidden" style="display: none;">
+                    <label class="seer" for="seer">Seasonal Energy Efficiency Ratio:</label>
+                    <input id="seer" name="seer" type="number" min="0" step=".1" ><br><br>
+
+                    <label class="hspf" for="hspf">Heating Seasonal Performance Factor:</label>
+                    <input id="hspf" name="hspf" type="number" min="0" step=".1" >
+                <br>
+                <br>
+                </div>
+               
+            </div>
+            
+        </div>
+
+        <div id="otherFields" style="display: none;">
+            <label for="wh_energy_source">Energy Source:</label>
+            <select id="wh_energy_source" name="wh_energy_source">
+                <option value="Electric"> Electric </option>
+                <option value="Gas"> Gas </option>
+                <option value="Thermosolar"> Thermosolar </option>
+            </select><br><br>
+
+            <label for="capacity">Capacity (gallons):</label>
+            <input type="number" step="0.1" id="capacity" name="capacity"><br><br>
+
+
+            <label for="temperature">Temperature:</label>
+            <input type="number" id="temperature" name="temperature" min="0" step="1">
+        </div>
+
+
+        <br>   
+        <input type="submit" value="Add" id="app_submit">
+        
+    </form>
+
+    <script>
+        function validate(elementID, ...children) {
+    
+            var checkbox = document.getElementById(elementID);
+            for (let child of children){
+                if (checkbox.checked){
+                    document.getElementById(child).required = true;
+                }else{
+                    document.getElementById(child).required = false;
+    
+                }
+
+            }
+        }
+        
+        function require_fields(){
+            var output = document.getElementById("appliance_type").value;
+            if(output == 'airhandler'){
+                required_on(false, 'wh_energy_source', 'capacity','temperature', 'heater_energy_source')
+
+                var elements = ['airconditioner', 'heater', 'heatpump'];
+                marked = false;
+                for (let e of elements){
+                    var check = document.getElementById(e).checked;
+                    if (check == true){
+                        marked=true;
+                    }
+                }
+                if(!marked){
+                    document.getElementById('app_submit').disabled = true;
+                }
+                else{
+                    document.getElementById('app_submit').disabled = '';
+
+                }
+
+            }else{
+                document.getElementById('app_submit').disabled = '';
+                required_on(true, 'wh_energy_source', 'capacity','temperature')
+                required_on(false, 'heater_energy_source', 'eer', 'seer', 'hspf')
+            }
+        }
+        
+        function required_on(val, ...elements){
+            for (let e of elements){
+                    document.getElementById(e).required = val;
+            }
+        }    
+    
+    </script>
+</body>
+</html>

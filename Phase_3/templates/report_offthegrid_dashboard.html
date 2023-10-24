@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<body>
+<h1>Off-the-grid Household Dashboard</h1>
+<hr>
+<br>
+<h2> Off-grid Household Count</h2>
+<table class="table table-striped">   
+    <thead>
+        <tr>
+            <th>State</th>
+            <th>Count of household</th>
+  
+        </tr>
+    </thead>
+    {% for h in hh %}
+    <tr>
+      <td>{{ h[0] }}</td>
+      <td>{{ h[1] }}</td>
+
+    </tr>
+    {% endfor %}
+</table>
+<hr>
+ <br>
+
+
+ <h2> Average Off-grid Power-Gen Percentage</h2>
+<table class="table table-striped">   
+    <thead>
+        <tr>
+            <th>Average of battery storage capacity</th>
+  
+        </tr>
+    </thead>
+    {% for h in abc %}
+    <tr>
+      <td>{{ h[0] }}</td>
+      <td>{{ h[1] }}</td>
+
+    </tr>
+    {% endfor %}
+</table>
+<hr>
+ <br>
+
+ <h2> Average water-heater capacity</h2>
+<table class="table table-striped">   
+    <thead>
+        <tr>
+            <th>Average Water Heater Gallon capacity of all on-the-grid</th>
+            <th>Average Water Heater Gallon capacity of all off-the-grid</th>
+  
+        </tr>
+    </thead>
+    {% for h in awc %}
+    <tr>
+      <td>{{ h[0] }}</td>
+      <td>{{ h[1] }}</td>
+
+    </tr>
+    {% endfor %}
+</table>
+<hr>
+ <br>
+
+
+
+ <h2> Average Off-grid BTU Stats</h2>
+ <table class="table table-striped">   
+     <thead>
+         <tr>
+            <th>Minimum BTU Rating</th>
+            <th>Average BTU Rating</th>
+            <th>Maximum BTU Rating</th>
+   
+         </tr>
+     </thead>
+     {% for h in btu_stats %}
+     <tr>
+       <td>{{ h[0] }}</td>
+       <td>{{ h[1] }}</td>
+       <td>{{ h[2] }}</td>
+ 
+     </tr>
+     {% endfor %}
+ </table>
+ <hr>
+  <br>
+
+
+
+
+ 
+ <p><a href="/report_menu">Return to Report Menu</a></p>
+</body>
+</html>

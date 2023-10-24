@@ -1,0 +1,99 @@
+CREATE TABLE PostalCode ( 
+Zip_code char(5) NOT NULL, 
+City char(50) NOT NULL, 
+State char(50) NOT NULL, 
+Latitude float NOT NULL, 
+Longitude float NOT NULL, 
+PRIMARY KEY (Zip_code) 
+); 
+
+CREATE TABLE Household ( 
+Email varchar(50) NOT NULL, 
+Square_footage int NOT NULL, 
+Home_type char(50) NOT NULL, 
+Cool_setting int NULL, 
+Heat_setting int NULL, 
+Zip_code char(5) NOT NULL, 
+PRIMARY KEY (Email),
+FOREIGN KEY (Zip_code) REFERENCES PostalCode (Zip_code) 
+); 
+
+CREATE TABLE Manufacturer ( 
+Name varchar(50) NOT NULL, 
+PRIMARY KEY (Name) 
+);  
+
+CREATE TABLE Utility ( 
+Email varchar(50) NOT NULL, 
+Utility char(50) NOT NULL, 
+PRIMARY KEY (Email, Utility), 
+FOREIGN KEY (Email) REFERENCES Household (Email) 
+); 
+
+CREATE TABLE Appliance ( 
+Email varchar(50) NOT NULL, 
+Appliance_order_num int NOT NULL, 
+Appliance_type char(50) NOT NULL, 
+Model_name varchar(50) NULL, 
+BTU_rating int NOT NULL, 
+Manufacturer_name varchar(50) NOT NULL, 
+PRIMARY KEY (Email, Appliance_order_num), 
+FOREIGN KEY (Email) REFERENCES Household (Email),
+FOREIGN KEY (Manufacturer_name) REFERENCES Manufacturer (Name)
+ON DELETE CASCADE
+); 
+
+
+CREATE TABLE AirConditioner ( 
+Email varchar(50) NOT NULL, 
+Appliance_order_num int NOT NULL, 
+Energy_efficiency_ratio float NOT NULL, 
+PRIMARY KEY (Email, Appliance_order_num), 
+FOREIGN KEY (Email, Appliance_order_num) REFERENCES Appliance (Email, Appliance_order_num)
+	ON DELETE CASCADE
+); 
+
+CREATE TABLE Heater ( 
+Email varchar(50) NOT NULL, 
+Appliance_order_num int NOT NULL, 
+heater_energy_source char(50) NOT NULL, 
+PRIMARY KEY (Email, Appliance_order_num), 
+FOREIGN KEY (Email, Appliance_order_num) REFERENCES Appliance (Email, Appliance_order_num)
+	ON DELETE CASCADE 
+); 
+
+ 
+
+CREATE TABLE HeatPump ( 
+Email varchar(50) NOT NULL, 
+Appliance_order_num int NOT NULL, 
+seasonal_efficiency_ratio float NOT NULL, 
+heat_performance_factor float NOT NULL, 
+PRIMARY KEY (Email, Appliance_order_num), 
+FOREIGN KEY (Email, Appliance_order_num) REFERENCES Appliance (Email, Appliance_order_num) 
+	ON DELETE CASCADE
+); 
+
+CREATE TABLE WaterHeater ( 
+Email varchar(50) NOT NULL, 
+Appliance_order_num int NOT NULL, 
+Capacity float NOT NULL, 
+Current_temp_setting int NULL, 
+waterheater_energy_source char(50) NOT NULL, 
+PRIMARY KEY (Email, Appliance_order_num), 
+FOREIGN KEY (Email, Appliance_order_num) REFERENCES Appliance (Email, Appliance_order_num)
+	ON DELETE CASCADE
+); 
+
+
+CREATE TABLE PowerGenerator ( 
+Email varchar(50) NOT NULL, 
+Power_order_num int NOT NULL, 
+Generation_type char(50) NOT NULL, 
+Battery_storage int NULL, 
+Avg_kwh int NOT NULL, 
+PRIMARY KEY (Email, Power_order_num), 
+FOREIGN KEY (Email) REFERENCES Household (Email)
+); 
+
+

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<body>
+<h1>Heating/Cooling Method Details</h1>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Household Type</th>
+      <th>Count of Air Conditioners</th>
+      <th>Average Air Conditioner BTUs</th>
+      <th>Average Air Conditioner EER</th>
+      <th>Count of Heaters</th>
+      <th>Average Heater BTUs</th>
+      <th>Most Common Heater Energy Source</th>
+      <th>Count of Heat Pumps</th>
+      <th>Average Heat Pump BTUs</th>
+      <th>Average Heat Pump SEER</th>
+      <th>Average Heat Pump HSPF</th>
+    </tr>
+  </thead>
+       
+  {% for a in all_details%}
+
+  <tr>
+    <td>{{ a[0] }}</td>
+    <td>{{ a[1] }}</td>
+    <td>{{ a[2] }}</td>
+    <td>{{ a[3] }}</td>
+    <td>{{ a[5] }}</td>
+    <td>{{ a[6] }}</td>
+    <td>{{ a[7] }}</td>
+    <td>{{ a[9] }}</td>
+    <td>{{ a[10] }}</td>
+    <td>{{ a[11] }}</td>
+    <td>{{ a[12] }}</td>
+
+  </tr>
+  {% endfor %}
+
+</table>
+
+<br>
+<p><a href="/report_menu">Return to Report Menu</a></p>
+</body>
+</html>

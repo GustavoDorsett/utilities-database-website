@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+</head>
+<body>
+<h1>Manufacturer/Model Search</h1>
+<br>
+<form method="POST">
+    <label for="manu_model_serach">Manufacturer/model Search: </label>
+    <input type="search" id="manusearch" name="manusearch">
+    <input type="submit" formaction="/report_manufacturer-model_search">
+<br>
+    <table class="table table-striped" id="empTable">
+        <tr>
+              <th>Manufacturer</th>
+              <th>Model</th>
+        </tr>
+            {% for r in results %}
+                <tr>
+                    <td class "manu">{{ r[0] }}</td>
+                    <td class "mod">{{ r[1] }}</td>
+                </tr>
+            {% endfor %}
+    </table>
+
+<br>
+<p><a href="/report_menu">Return to Report Menu</a></p>
+<script>
+    function HighlightData(search) {
+      var testing
+      for (let row of empTable.rows) 
+        {
+            for(let cell of row.cells) 
+            {
+                if (search != ""){
+                    testing = cell.innerText.toLowerCase()
+                    if (testing.includes(search)){
+                
+                    cell.style.backgroundColor = "yellow"
+                    }
+                }
+                
+            }
+        }
+    }
+</script>
+<script>HighlightData("{{ manu_str }}")</script>
+
+</body>
+</html>
